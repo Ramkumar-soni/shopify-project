@@ -1,0 +1,212 @@
+.shop-buy-tabs-collection-section-wrapper {
+  display: block;
+  padding: 40px 60px;
+  @media screen and (max-width: 767px) {
+    padding: 20px 0;
+  }
+  .collection-tabs {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border-bottom: 5px solid #D9D9D9;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    @media screen and (max-width: 1024px) {
+      flex-direction: column;
+      gap: 30px;
+    }
+    @media screen and (max-width: 767px) {
+      border-bottom: 3px solid #D9D9D9;
+    }
+    .section-title {
+      display: block;
+      width: 50%;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: normal;
+      margin: 0;
+      color: #000;
+      letter-spacing: inherit;
+      @media screen and (max-width: 1024px) {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .tabs-view-all-wrapper {
+      width: 50%;
+      display: flex;
+      justify-content: space-between;
+      @media screen and (max-width: 1024px) {
+        width: 100%;
+      }
+      .view-all-link {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: normal;
+        color: #BD4A2D;
+        padding: 0 30px;
+        @media screen and (max-width: 1105px) and (min-width: 767px) {
+          padding: 0 10px;
+        }
+         @media screen and (max-width: 767px) {
+          padding: 0 15px;
+          font-size: 14px;
+        }
+      }
+      .tab-btn {
+        position: relative;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: normal;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        padding: 0 30px;
+        @media screen and (max-width: 900px) and (min-width: 600px) {
+          padding: 0 20px;
+        }
+        @media screen and (max-width: 767px) {
+          padding: 0 15px;
+          font-size: 14px;
+        }
+        &.active {
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -54%;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background-color: #BD4A2D;
+            transition: background-color 0.3s;
+            border-radius: 16px;
+            @media screen and (max-width: 767px) {
+              bottom: -65%;
+              height: 3px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .content-wrapper {
+    display: block;
+    margin-top: 40px;
+    @media screen and (max-width: 767px) {
+      margin-top: 20px;
+      padding: 0 15px;
+    }
+    .collection-block {
+      .products-card-wrapper {
+        display: flex;
+        width: 100%;
+        gap: 16px;
+        @media screen and (max-width: 1023px) and (min-width: 768px) {
+          flex-wrap: wrap;
+        }
+        @media screen and (max-width: 767px) {
+          gap: 8px;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          cursor: grab;
+        }
+        .product-card {
+          width: calc(25% - 16px * 3 / 4);
+          max-width: calc(25% - 16px * 3 / 4);
+          background: #F8F6F6;
+          border-radius: 10px;
+          @media screen and (max-width: 1023px) and (min-width: 768px) {
+            width: calc(50% - 16px * 3 / 4);
+            max-width: calc(50% - 16px * 3 / 4);
+          }
+          @media screen and (max-width: 767px) {
+            width: calc(50% - 8px * 3 / 4);
+            max-width: calc(50% - 8px * 3 / 4);
+            min-width: 250px;
+          }
+          .product-image-price-wrapper {
+            display: flex;
+            text-decoration: none;
+            color: #000;
+            flex-direction: column;
+            gap: 13px;
+            .image-container {
+              position: relative;
+              img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+                border-radius: 10px;
+              }
+              .reviews-icon-wrapper {
+                position: absolute;
+                display: block;
+                bottom: 10px;
+                right: 8px;
+                z-index: 5;
+              }
+              .tags-percentage-wrapper {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                padding: 0 10px;
+                position: absolute;
+                top: 5px;
+                .badges-wrapper {
+                  .badge {
+                    font-size: 12px;
+                    font-weight: 600;
+                    border: 0.75px solid #D4B46C;
+                    color: #D4B46C;
+                  }
+                }
+                .percentage-wrapper {
+                  .price-offer {
+                    display: inline-block;
+                    border-radius: 8px;
+                    background: #D4B46C;
+                    color: #fff;
+                    padding: 3px 9px;
+                    font-size: 12px;
+                    font-weight: 600;
+                  }
+                }
+              }
+            }
+            .title-price-wrapper {
+              display: block;
+              padding: 0 16px 10px;
+              .product-title {
+                display: block;
+                font-size: 16px;
+                font-weight: 400;
+                color: #121212;
+                text-transform: uppercase;
+                @media screen and (max-width: 767px) {
+                  font-size: 14px;
+                }
+              }
+              .product-price {
+                .compare-price-wrapper {
+                  display: flex;
+                  gap: 10px;
+                }
+                .regular-price {
+                  font-size: 16px;
+                  font-weight: 600;
+                  color: #222222;
+                }
+                .compare-price {
+                  font-size: 16px;
+                  font-weight: 400;
+                  text-decoration: line-through;
+                  color: #666666;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{% assign sizes = '480,765,900,1000,1200' | split: "," %}
+{%- if true -%}
+  {%- assign load_blur = true -%}
+{%- endif -%}
+{%- if load_blur -%}
+  {% assign base_classes =  "blur-up lazyload img-fluid" %}
+  {%- assign load_blur = true -%}
+{% else  %}
+  {% assign base_classes =  "lazyload img-fluid" %}
+{%- endif -%}
+{% assign image_lazy = true %}
+{% if is_lazy == false %}
+  {% assign image_lazy = false %}
+{% endif %}
+{%- if asset_url -%}
+  <img alt="{{src_alt}}" {%- if load_blur -%} src="{{- src_name | asset_img_url: 'master' -}}" {%- else -%} src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" {%- endif -%} data-sizes="auto" data-src="{{- src_name | asset_img_url: 'master' -}}" data-srcset="
+    {%- for size in sizes -%}
+    {%- assign size_x = size| append : 'x' -%}
+    {{- src_name | asset_img_url: size_x  }} {{size | append:'w' -}},
+    {%- endfor -%}" class="{{base_classes}}{% unless src_class == blank %} {{src_class}}{% endunless %}" width="{{ src_name.width }}" height="{{ src_name.height }}" {% if image_lazy %}loading="lazy"{% else %}fetchpriority="high"{% endif %}>
+{%- elsif file_url -%}
+  <img alt="{{src_alt}}" {%- if load_blur -%} src="{{- src_name | file_img_url: 'master' -}}" {%- else -%} src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" {%- endif -%} data-sizes="auto" data-src="{{- src_name | file_img_url: 'master' -}}" data-srcset="
+    {%- for size in sizes -%}
+    {%- assign size_x = size| append : 'x'  -%}
+    {{- src_name | file_img_url: size_x   }} {{size | append:'w' -}},
+    {%- endfor -%}" class="{{base_classes}}{% unless src_class == blank %} {{src_class}}{% endunless %}" width="{{ src_name.width }}" height="{{ src_name.height }}" {% if image_lazy %}loading="lazy"{% else %}fetchpriority="high"{% endif %}>
+{%- else -%}
+  <img alt="{{src_alt}}" {%- if load_blur -%} src="{{- src_name | img_url: 'master' -}}" {%- else -%} {%- unless no_base -%} src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" {%- endunless -%} {%- endif -%} data-sizes="auto" data-src="{{- src_name | img_url: 'master'  -}}" data-srcset="
+    {%- for size in sizes -%}
+    {%- assign size_x = size| append : 'x' -%}
+    {{- src_name | img_url: size_x  }} {{size | append:'w' -}},
+    {%- endfor -%}" class="{{base_classes}}{% unless src_class == blank %} {{src_class}}{% endunless %}" width="{{ src_name.width }}" height="{{ src_name.height }}" {% if image_lazy %}loading="lazy"{% else %}fetchpriority="high"{% endif %}>
+{%- endif -%}

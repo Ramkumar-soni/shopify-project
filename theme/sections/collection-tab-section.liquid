@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="{{ 'collection-tab-section.scss' | asset_url }}">
+
+<div class="shop-buy-tabs-collection-section-wrapper">
+  <div class="collection-tabs">
+    {% if section.settings.title != blank %}
+      <span class="section-title">{{ section.settings.title }}</span>      
+    {% endif %}
+    <div class="tabs-view-all-wrapper">
+      {% assign view_all_link = '' %}
+      {% for block in section.blocks %}
+        <button class="tab-btn{% if forloop.first %} active{% endif %}" data-block-id="block-{{ block.id }}" data-link="{{ block.settings.view_all_link }}">
+          {{ block.settings.title | escape }}
+        </button>
+        {% if forloop.first and block.settings.view_all_link != blank %}
+          {% assign view_all_link = block.settings.view_all_link %}
+        {% endif %}
+      {% endfor %}
+    
+      {% if view_all_link != '' %}
+       <a href="{{ view_all_link }}" class="view-all-link">View All</a>
+      {% endif %}
+    </div>
+  </div>
+  
+  <div class="content-wrapper">
+    {% for block in section.blocks %}
+      <div class="collection-block" id="block-{{ block.id }}" style="{% unless forloop.first %}display:none;{% endunless %}">
+        {% assign collection = collections[block.settings.collection] %}
+        {% if collection %}
+          <div class="products-card-wrapper">
+            {% for product in collection.products limit:4 %}
+              <div class="product-card">
+                <a class="product-image-price-wrapper" href="{{ product.url | within: collection }}">
+                  <div class="image-container">
+                    <div class="tags-percentage-wrapper">
+                      <div class="badges-wrapper">
+                        {% assign badge_prefix = 'badge_' %}
+                        {% for tag in product.tags %}
+                          {% if tag contains badge_prefix %}
+                            {% assign badge_text = tag | remove: badge_prefix %}
+                            <span class="badge badge-{{ badge_text | handle }}">{{ badge_text }}</span>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      {% if product.compare_at_price > product.price %}
+                        <div class="percentage-wrapper">
+                          {% comment %} Discount Percentage {% endcomment %}
+                          {% assign discount = product.compare_at_price | minus: product.price %}
+                          {% assign discount_percent = discount | times: 100 | divided_by: product.compare_at_price %}
+                          <span class="price-offer">{{ discount_percent | round }}%</span>
+                        </div>                        
+                      {% endif %}
+                    </div>
+
+                    {%- assign src_alt = product.featured_image.src | escape  -%}
+                    {%- render 'srcset-img' src_name:product.featured_image.src,src_alt:src_alt.src,src_class:'product-image' -%}                    
+                    <div class="reviews-icon-wrapper">
+                      {% render 'review-icon' %}
+                    </div>
+                  </div>
+                  <div class="title-price-wrapper">
+                    <span class="product-title">{{ product.title }}</span>
+                    <div class="product-price">
+                      {% if product.compare_at_price > product.price %}
+                        <div class="compare-price-wrapper">
+                          From <span class="regular-price">{{ product.price | money | remove: '.00' }}</span>
+                          <span class="compare-price">{{ product.compare_at_price | money |  remove: '.00'  }}</span>
+                        </div>
+                      {% else %}
+                        <div class="regular-price-wrapper">
+                          From <span class="regular-price">{{ product.price | money }}</span>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>  
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var tabButtons = document.querySelectorAll('.tab-btn');
+    var blocks = document.querySelectorAll('.collection-block');
+    tabButtons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        blocks.forEach(function(block) { block.style.display = 'none'; });
+        tabButtons.forEach(function(b) { b.classList.remove('active'); });
+        var blockId = btn.getAttribute('data-block-id');
+        document.getElementById(blockId).style.display = '';
+        btn.classList.add('active');
+        if(document.querySelector(".view-all-link")) {
+          document.querySelector(".view-all-link").href = btn?.getAttribute("data-link");
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Shop Buy Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "section Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_block",
+      "name": "Collection Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Block Title"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "view_all_link",
+          "label": "View All Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Shop Buy Collection"
+    }
+  ]
+}
+{% endschema %}
