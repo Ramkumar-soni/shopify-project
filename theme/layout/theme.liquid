@@ -310,7 +310,12 @@
     {% sections 'header-group' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+    {% if product.handle == "eau-de-parfum-oud-white" or template == 'index' or template == 'cart' or template contains 'collection' %}
       {{ content_for_layout }}
+      {% else %}
+        Products Coming Soon!!!!
+    {% endif %}
+
     </main>
 
     {% sections 'footer-group' %}

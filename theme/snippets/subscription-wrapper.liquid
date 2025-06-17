@@ -1,0 +1,89 @@
+<div class="subscription-box-container">
+  <span class="recommended-text">Recommended</span>
+  <div class="subscription-list-container">
+    <div class="single-drink-subscription-wrapper tab-wrapper">
+      <label class="label-wrapper">
+        <input type="radio" name="subscription" value="single" checked>
+        <div class="flex-wrapper">
+          <span class="text">Single Drink Subscription</span>
+          <div class="price-wrapper">$6.00 <s class="comnpare-price">$10</s></div>
+        </div>
+      </label>
+
+      {% render 'variant-data' %}
+
+      <div class="what-included-wrapper">
+        <p class="title-text">What’s Included:</p>
+        <div class="time-delivery-wrapper">
+          <div class="image-text-wrapper">
+            <span class="title">Every 30 Days</span>
+            <img 
+              src="https://cdn.shopify.com/s/files/1/0666/8134/0058/files/image-removebg-preview_1_1_a6a229b9-504d-48f4-8ae2-11affb369780.png?v=1749966509" 
+              alt="{{ value }}" 
+              width="40" 
+              height="40"
+              class="remain-days-image"
+            >
+          </div>
+          <div class="image-list-text-wrapper">
+            <span class="title">One Time (Free)</span>
+            <div class="image-container">
+              <div class="card-image">
+                <img 
+                  src="https://cdn.shopify.com/s/files/1/0666/8134/0058/files/image-removebg-preview_1_54479ea3-6ed3-4e64-bf57-e214d358c7c3.png?v=1749972461" 
+                  alt="brown-image" 
+                  width="40" 
+                  height="40"
+                  class="bottle-1"
+                >
+              </div>
+              <div class="card-image">
+                <img 
+                  src="https://cdn.shopify.com/s/files/1/0666/8134/0058/files/image-removebg-preview_1_1_a6a229b9-504d-48f4-8ae2-11affb369780.png?v=1749966509" 
+                  alt="white-image" 
+                  width="40" 
+                  height="40"
+                  class="bottle-2"
+                >
+              </div>
+              <div class="card-image">
+                <img 
+                  src="https://cdn.shopify.com/s/files/1/0666/8134/0058/files/image-removebg-preview_1_2_fc7768d8-3bfb-4895-9f66-bb1eaf1d31ce.png?v=1749966522" 
+                  alt="orange-image" 
+                  width="40" 
+                  height="40"
+                  class="bottle-3"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="information-text">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="9" viewBox="0 0 13 9" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8161 0.408665C12.0826 0.64187 12.1068 1.04814 11.8698 1.31125L5.19648 8.71819C4.95818 8.98267 4.54903 8.99949 4.28984 8.75551L0.428237 5.12014C0.187415 4.89342 0.164363 4.51564 0.37098 4.25738C0.598968 3.97239 1.02353 3.93317 1.29486 4.17721L4.29095 6.87213C4.55132 7.10634 4.95218 7.0854 5.18676 6.82535L10.9268 0.461168C11.159 0.203628 11.5551 0.180283 11.8161 0.408665Z" fill="black"/>
+          </svg>
+          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+        </div>
+      </div>
+
+    </div>
+    <div class="double-drink-subscription-wrapper tab-wrapper">
+      <label class="label-wrapper">
+        <input type="radio" name="subscription" value="double">
+        <div class="flex-wrapper">
+          <span class="text">Double Drink Subscription</span>
+          <div class="price-wrapper">$20.00 <s class="comnpare-price">$12</s></div>
+        </div>
+      </label>
+    </div>
+    <div class="double-drink-subscription-wrapper tab-wrapper">
+      <label class="label-wrapper">
+        <input type="radio" name="subscription" value="try-once">
+        <div class="flex-wrapper">
+          <span class="text">Try Once</span>
+          <div class="price-wrapper">$8.00 <s class="comnpare-price">$10</s></div>
+        </div>
+      </label>
+    </div>
+  </div>
+</div>

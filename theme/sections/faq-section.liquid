@@ -1,0 +1,281 @@
+{% style %}
+.faq-accordion-section {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  font-family: "Inter", sans-serif;
+
+  .faq-accordion-left {
+    flex: 1 1 300px;
+    padding-right: 20px;
+
+    h2 {
+      font-size: 3rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #333;
+      line-height: 1.1;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .view-all-button {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #333;
+      }
+    }
+  }
+
+  .faq-accordion-right {
+    flex: 2 1 600px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #333;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #000;
+      }
+
+      .toggle-icon {
+        font-size: 1.8rem;
+        font-weight: 300;
+        transition: transform 0.3s ease;
+        color: #777;
+        line-height: 1;
+      }
+    }
+
+    &.active {
+      .toggle-icon {
+        transform: rotate(45deg);
+      }
+
+      .faq-answer {
+        max-height: 500px;
+        padding-bottom: 20px;
+      }
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      padding: 0;
+
+      p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #666;
+        padding-bottom: 20px;
+      }
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 40px 15px;
+
+    .faq-accordion-left {
+      padding-right: 0;
+      margin-bottom: 30px;
+      text-align: center;
+      flex: unset;
+
+      h2 {
+        font-size: 2.5rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+
+      .view-all-button {
+        width: 100%;
+      }
+    }
+
+    .faq-item {
+      .faq-question {
+        font-size: 1.05rem;
+        padding: 15px 0;
+      }
+
+      .faq-answer p {
+        padding-bottom: 15px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .faq-accordion-left h2 {
+      font-size: 2rem;
+    }
+  }
+}
+{% endstyle %}
+
+<section class="faq-accordion-section">
+  <div class="faq-accordion-left">
+    <h2>{{ section.settings.title }}</h2>
+    <p>{{ section.settings.description }}</p>
+    {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+      <a href="{{ section.settings.button_link }}" class="view-all-button rounded-lg">
+        {{ section.settings.button_text }}
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="faq-accordion-right">
+    {% for block in section.blocks %}
+      <div class="faq-item" {{ block.shopify_attributes }}>
+        <div class="faq-question">
+          <h3>{{ block.settings.question | escape }}</h3>
+          <span class="toggle-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>{{ block.settings.answer | escape }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  // Ensure the script runs after the DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      const toggleIcon = item.querySelector('.toggle-icon');
+
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        if (isActive) {
+          item.classList.remove('active');
+          answer.style.maxHeight = '0';
+          toggleIcon.style.transform = 'rotate(0deg)';
+        } else {
+          item.classList.add('active');
+          // Set maxHeight to scrollHeight to allow for dynamic content and smooth transition
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          toggleIcon.style.transform = 'rotate(45deg)';
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "F.A.Qs",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu felis vel ex aliquam interdum id nec orci.</p>",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "default": "View All FAQs",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu felis vel ex aliquam interdum id nec orci.</p>",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordion",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "faq_item"
+        },
+        {
+          "type": "faq_item"
+        },
+        {
+          "type": "faq_item"
+        },
+        {
+          "type": "faq_item"
+        },
+        {
+          "type": "faq_item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
