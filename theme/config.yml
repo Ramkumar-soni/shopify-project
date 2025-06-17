@@ -1,6 +1,6 @@
 development:
   password: shptka_594026290e014c1f2b34359a7019acc6
-  theme_id: "142979924122"
+  theme_id: "142986117274"
   store: checkout-tmc.myshopify.com
   ignore_files:
     - README.md

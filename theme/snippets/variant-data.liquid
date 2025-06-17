@@ -1,0 +1,95 @@
+<div class="variant-selector-wrapper product-main-js">
+  <p class="title-text">Choose Flavor {{ index }}</p>
+  {% unless product.has_only_default_variant %}
+    <div class="product-swatch-wrapper">
+      <div class="swatches-wrapper">
+        <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+          {%- comment -%}Check Color swatch{%- endcomment -%}
+          {%- assign color_array = 'color,colour,couleur,colore,farbe,색,色,färg,farve' | split:','-%}
+          {%- for option in product.options_with_values -%}
+            {%- assign option_handle = option.name | handleize -%}
+            {%- assign is_color = false -%}
+            {%- for color in color_array -%}
+              {%- assign color_handle = color | handleize -%}
+              {%- assign option_handle = option.name | handleize -%}
+
+              {%- if color_handle == option_handle -%}
+                {%- assign is_color = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {% if is_color %}
+              <fieldset class="product-form-input color-swatch product-form-input-js color-swatch-js" id="option-{{ forloop.index }}">
+                <legend class="form-label form-label-js color-swatch-js" data-position="{{ forloop.index }}">{{ option.name }}</legend>
+                <div class="options-wrapper color-option-wrapper">
+                  {%- for value in option.values -%}
+                    {% assign value_handle = value | handleize %}
+                    {% assign swatch_handle = 'swt-' | append: value_handle %}
+                    <div class="option-value">
+                      <span class="color-div" style="background: {{ value | downcase }};"></span>
+                      <div class="lable-wrapper">
+                        <input type="radio" name="{{ option.name }}" value="{{ value | escape }}"
+                        id="{{ section.id }}-{{ block_index }}-{{ option.position }}-{{ forloop.index0 }}"
+                        form="{{ product_form_id }}"
+                        {% if option.selected_value==value %} checked {% endif %}
+                      >
+                        <label for="{{ section.id }}-{{ block_index }}-{{ option.position }}-{{ forloop.index0 }}" class="color-label{% if option.selected_value==value %} selected-input-class{% endif %}"
+                        >
+                          {{ value }}
+                        </label>
+                      </div>
+
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {% else %}
+              <fieldset class="product-form-input normal-swatch" id="option-{{ forloop.index }}">
+                <div class="option-container">
+                  {%- assign option_index = option.position | minus: 1 -%}
+                  {%- for value in option.values -%}
+                    {%- assign variant_with_value = nil -%}
+                    {%- for variant in product.variants -%}
+                      {%- assign variant_option_value = variant.options[option_index] -%}
+
+                      {%- if variant_option_value == value and variant.featured_image -%}
+                        {%- assign variant_with_value = variant -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                    {%- if variant_with_value -%}
+                      <label for="{{ section.id }}-{{ block_index }}-{{ option.position }}-{{ forloop.index0 }}-{{ addflavor }}">
+                        <div class="wrapper">
+                          <input 
+                            type="radio" 
+                            name="option-{{ addflavor }}" 
+                            value="{{ value | escape }}" 
+                            id="{{ section.id }}-{{ block_index }}-{{ option.position }}-{{ forloop.index0 }}-{{ addflavor }}"
+                            form="{{ product_form_id }}"
+                            {% if option.selected_value == value %}checked{% endif %}
+                          >
+                          {{ value }}
+                        </div>
+                        <img 
+                          src="{{ variant_with_value.featured_image | img_url: 'master' }}" 
+                          alt="{{ value }}" 
+                          width="40" 
+                          height="40"
+                          class="variant-image"
+                        >
+                      </label>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {% endif %}
+          {%- endfor -%}
+        </variant-radios>
+      </div>
+    </div>
+  {% endunless %}
+  <script class="product-json-js" type="application/json">
+    {{ all_products[product.handle] | json }}
+  </script>
+</div>
