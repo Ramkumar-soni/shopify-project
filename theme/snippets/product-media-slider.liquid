@@ -32,7 +32,6 @@
         {% for media in product.media %}
           <div class="swiper-slide">
             {%- render 'srcset-img', src_name: media, src_alt: media.alt, src_class:'thumbnail-media' -%}
-            {% comment %} {{ media | media_tag: class: 'thumbnail-media' }} {% endcomment %}
           </div>
         {% endfor %}
       </div>
