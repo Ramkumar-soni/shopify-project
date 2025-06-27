@@ -1,0 +1,24 @@
+<div class="double-drink-subscription-wrapper tab-wrapper">
+  <label class="label-wrapper">
+    <input type="radio" name="subscription" value="double">
+    <div class="flex-wrapper">
+      <span class="text">Double Drink Subscription</span>
+      {% assign base_price = product.price | times: 2 %}
+      {% assign subscription_price = base_price | times: 0.25 %}
+      {% assign final_price = subscription_price | times: 0.8 %}
+
+      <div class="price-wrapper">
+        {{ final_price | money }} <s class="comnpare-price">{{ base_price | money }}</s>
+      </div>
+    </div>
+  </label>
+
+  <div class="inner-content-wrapper double-drink-variant-selection">
+    {% render 'variant-data', addflavor: 'flavor-1', index: 1 %}
+    {% render 'variant-data', addflavor: 'flavor-2', index: 2 %}
+    {% if product.metafields.custom.double_drink_what_included != blank %}
+      {{ product.metafields.custom.double_drink_what_included }}              
+    {% endif %}
+  </div>
+
+</div>

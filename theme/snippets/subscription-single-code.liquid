@@ -1,0 +1,22 @@
+<div class="single-drink-subscription-wrapper tab-wrapper active">
+  <label class="label-wrapper">
+    <input type="radio" name="subscription" value="single" checked>
+    <div class="flex-wrapper">
+      <span class="text">Single Drink Subscription</span>
+      {% assign base_price = product.price %}
+      {% assign subscription_price = base_price | times: 0.25 %}
+      {% assign final_price = subscription_price | times: 0.8 %}
+
+      <div class="price-wrapper">
+        {{ final_price | money }} <s class="comnpare-price">{{ base_price | money }}</s>
+      </div>
+    </div>
+  </label>
+
+  <div class="inner-content-wrapper" first-vid="{{ product.selected_or_first_available_variant.id }}">
+    {% render 'variant-data', addflavor: 'regular-flavor' %}
+    {% if product.metafields.custom.single_drink_what_included != blank %}
+      {{ product.metafields.custom.single_drink_what_included }}
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="product-media-slider">
+    
+    <!-- Main Swiper -->
+    <div class="swiper main-swiper">
+      <div class="swiper-wrapper">
+        {% for media in product.media %}
+          <div class="swiper-slide" data-media-id="{{ media.id }}">
+            {%- render 'srcset-img', src_name: media, src_alt: media.alt,src_class:'product-media' -%}
+          </div>
+        {% endfor %}
+      </div>
+      
+      <!-- Arrows -->
+      <div class="swiper-button-next">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M0.188263 6.41642H10.0516L5.52112 1.88592L6.67198 0.743164L13.1557 7.22688L6.67198 13.7106L5.52923 12.5678L10.0516 8.03735H0.188263V6.41642Z" fill="#322D2D"/>
+        </svg>
+      </div>
+      <div class="swiper-button-prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M13.8436 6.41642H3.98019L8.51069 1.88592L7.35983 0.743164L0.876114 7.22688L7.35983 13.7106L8.50259 12.5678L3.98019 8.03735H13.8436V6.41642Z" fill="#322D2D"/>
+        </svg>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Thumbnail Swiper -->
+    <div class="swiper thumb-swiper">
+      <div class="swiper-wrapper">
+        {% for media in product.media %}
+          <div class="swiper-slide">
+            {%- render 'srcset-img', src_name: media, src_alt: media.alt, src_class:'thumbnail-media' -%}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
