@@ -296,9 +296,20 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    <!-- Add to <head> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    <div class="websiteLoader loading__spinner">
+      <p>
+        <svg aria-hidden="true" focusable="false" class="spinner icon icon--extra-medium" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="4" cx="33" cy="33" r="30"></circle>
+      </svg> 
+        Updating.... 
+      </p>
+    </div>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
